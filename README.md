@@ -112,4 +112,4 @@ Hybrid quantum–classical models face serious hardware constraints: NISQ device
 - **Low‑Rank Adaptation (LoRA)**: [LoRA overview](https://huggingface.co/docs/peft/conceptual_guides/lora)
 - **TinyLlama‑VLM‑LoRA architecture**: [Model card](https://huggingface.co/sriram7737/TinyLlama-VLM-LoRA)
 - **Quantum programming concepts**: [Quantum programming articles](https://www.postquantum.com/resources/)
-- **Variational quantum algorithms**: [Intro to VQAs](https://levelup.gitconnected.com/hybrid-quantum-neural-networks-with-pytorch-and-pennylane-533a759760a0)
+- **Variational quantum algorithms**: [Intro to VQAs](https://www.quera.com/glossary/variational-quantum-algorithm)
