@@ -19,9 +19,9 @@ The implementation uses the following components:
   with Low‑Rank Adaptation (LoRA) adapters attached to the
   query/value projection sublayers of its attention blocks.  LoRA
   reduces the number of trainable parameters by decomposing a large
-  matrix into two smaller low‑rank matrices【438111095739304†L103-L105】.  The base
+  matrix into two smaller low‑rank matrices.  The base
   TinyLlama weights remain frozen and only the adapters, projector and
-  gate are trained during fine‑tuning【504481890058751†L59-L81】.
+  gate are trained during fine‑tuning.
 * **Quantum projection layer** – a small quantum neural network built
   with PennyLane that processes a down‑sampled CLIP embedding.  It
   encodes the data into qubit rotations, applies entangling gates
@@ -37,7 +37,7 @@ This example is written for educational purposes.  It is not intended
 to be computationally efficient on today’s hardware; instead it shows
 how to wrap a quantum circuit inside a PyTorch module and integrate it
 with a pre‑trained transformer.  The quantum layer operates on only
-a few qubits to stay within the noise budget of NISQ devices【245392272704463†L213-L244】.
+a few qubits to stay within the noise budget of NISQ devices.
 
 Requirements
 ------------
@@ -101,7 +101,7 @@ class QuantumProjection(nn.Module):
     2. **Quantum circuit:** encode the down‑sampled features into qubit
        rotations, apply entangling gates with trainable parameters and
        measure expectation values.  The circuit follows the typical
-       variational pattern used in hybrid algorithms【245392272704463†L213-L244】.
+       variational pattern used in hybrid algorithms.
     3. **Post‑processing:** map the measured expectation values up to
        TinyLlama's hidden size (4096) via another linear layer.  This
        produces the “vision token” that will be concatenated with
@@ -179,7 +179,7 @@ class QuantumProjection(nn.Module):
         rather than iterating over the batch.  When a QNode receives a
         batch of inputs, it broadcasts the execution and returns a
         stacked tensor of results.  Broadcasting can be significantly
-        faster than looping over each sample【129125191415563†L349-L396】.
+        faster than looping over each sample.
         """
         # Reduce dimensionality to the number of qubits.  This
         # learnable projection selects which components of the CLIP
@@ -317,7 +317,7 @@ class HybridVisionLanguageModel(nn.Module):
 
         # Pass through the TinyLlama model.  In the LoRA setup the
         # TinyLlama weights are frozen and only the adapters are
-        # trainable【504481890058751†L59-L81】.  The model accepts
+        # trainable.  The model accepts
         # `inputs_embeds` and `attention_mask` instead of raw tokens.
         outputs = self.text_model(
             inputs_embeds=combined_embeds,
@@ -331,7 +331,7 @@ def load_models(device: torch.device) -> Tuple[CLIPModel, nn.Module, AutoTokeniz
     """Load CLIP, LoRA‑adapted TinyLlama and tokenizer.
 
     The function follows the example from the TinyLlama‑VLM‑LoRA model
-    card【504481890058751†L140-L169】.  It returns the frozen CLIP model,
+    card.  It returns the frozen CLIP model,
     the language model with LoRA adapters, the tokenizer and the
     CLIP processor for preprocessing images.
     """
@@ -345,7 +345,7 @@ def load_models(device: torch.device) -> Tuple[CLIPModel, nn.Module, AutoTokeniz
 
     # 2) Base TinyLlama and LoRA adapter.  The base model is kept
     # frozen; LoRA adapters add trainable low‑rank matrices onto
-    # q_proj and v_proj layers【504481890058751†L59-L81】.
+    # q_proj and v_proj layers.
     base_llama = AutoModelForCausalLM.from_pretrained(
         "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
         torch_dtype=torch.float16,
